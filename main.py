@@ -3,6 +3,8 @@ import time
 import json
 from slackclient import SlackClient
 import multiprocessing
+import urlmarker
+import re
 
 #worker checks for https link and prints/adds to db if that's the case
 def worker(msgs):
@@ -10,6 +12,9 @@ def worker(msgs):
     if msgs["type"] == "message":
         #check if message contains a link
         print 'Worker:', msgs
+        print msgs["text"]
+        print re.findall(urlmarker.URL_REGEX, msgs["text"])
+        
     return
 
 if __name__ == "__main__":
@@ -18,7 +23,7 @@ if __name__ == "__main__":
 
     sc = SlackClient(config["slack_token"])
 
-    jobs = [] #should i remove the jobs from a queue? 
+    jobs = [] #should i remove the jobs from a queue?
     if sc.rtm_connect():
         while True:
             line = sc.rtm_read()
