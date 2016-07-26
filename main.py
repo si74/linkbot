@@ -14,7 +14,10 @@ def worker(msgs):
         print 'Worker:', msgs
         print msgs["text"]
         print re.findall(urlmarker.URL_REGEX, msgs["text"])
-        
+
+        #go through regex process to determine if there is a link
+        #grab channel the link appeared in
+
     return
 
 if __name__ == "__main__":
