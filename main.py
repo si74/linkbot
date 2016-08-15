@@ -23,14 +23,18 @@ def worker(msgs, sc):
         if len(link) > 0:
             print link
             print channel
+            channel_name = ""
 
             #grab channel info
-            
+            channel_info = sc.server.api_call("channels.info",channel=channel)
 
-        #grab channel the link appeared in
+            #grab channel the link appeared in
+            if channel_info["ok"]:
+                channel_name = channel_info["channel"]["name"]
+                print channel_name
 
+            #push the 
     return
-
 
 
 if __name__ == "__main__":
