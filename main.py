@@ -42,13 +42,14 @@ if __name__ == "__main__":
         config = json.load(fd)
 
     sc = SlackClient(config["slack_token"])
+    endpoint = config["linkURL"] #url to which one should send link
 
     jobs = [] #should i remove the jobs from a queue?
     if sc.rtm_connect():
         while True:
             line = sc.rtm_read()
             if len(line) > 0:
-                 p = multiprocessing.Process(target=worker, args=(line, sc))
+                 p = multiprocessing.Process(target=worker, args=(line, sc, endpoint))
                  jobs.append(p)
                  p.start()
             time.sleep(1)
